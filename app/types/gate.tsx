@@ -14,4 +14,5 @@ enum QuantumGate {
 export interface Gate {
     index: number;
     type: QuantumGate;
+    wires: number[];
 }
