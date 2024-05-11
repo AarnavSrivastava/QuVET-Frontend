@@ -1,8 +1,8 @@
 "use client"
 
-import ListBuilder from "./components/general-components/listbuilder.tsx";
-import Wires from "./components/circuit-components/wires.tsx";
-import { Wire } from "./types/wire.tsx";
+import ListBuilder from "./components/general-components/listbuilder";
+import Wires from "./components/circuit-components/wires";
+import { Wire } from "./types/wire";
 import React, { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -45,13 +45,14 @@ export default function Home() {
       </button>
       <ListBuilder
         items={wires}
-        renderItem={(item) => <Wires key={item.index} {...item} />}
-        handleDelete={(indexToDelete) => {
-          if (wires.length !== 1) {
-            const newWires = wires.filter((wire) => wire.index !== indexToDelete)
-            setWires(newWires);
-          }
-        }}
+        renderItem={(item: Wire, index: number) => <Wires key={index} wire={item} 
+          handleDelete={(indexToDelete: number) => {
+            if (wires.length !== 1) {
+              const newWires = wires.filter((wire) => wire.index !== indexToDelete)
+              setWires(newWires);
+            }
+          }}
+        />}
         className="flex flex-col gap-[50px] w-full"
       />
     </main>

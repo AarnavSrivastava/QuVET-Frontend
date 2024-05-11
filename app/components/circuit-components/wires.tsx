@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Wire } from '../../types/wire';
 
-export default function Wires({handleDelete}, wire, key) {
+export default function Wires({props}: any) {
     const [visible, setVisible] = useState(false);
     return (
         <div
@@ -16,7 +17,7 @@ export default function Wires({handleDelete}, wire, key) {
                 <div className="absolute flex justify-center items-center w-10 h-10">
                     <button
                         className="w-full h-full hover:bg-china-rose bg-china-rose-op50 rounded-full border-2 border-black transition-all duration-250"
-                        onClick={() => handleDelete(key)}
+                        onClick={() => props.handleDelete(props.key)}
                     >
                         <FontAwesomeIcon
                             icon={ faXmark }

@@ -1,9 +1,9 @@
-export default function ListBuilder({ items, renderItem, className, handleDelete }) {
+export default function ListBuilder({ items, renderItem, className }: any) {
     return (
         <div className={className}>
-            {items.map((item, index) => (
-                <div key={item.index}>
-                    {renderItem({handleDelete}, item, index)}
+            {items.map((item: any, index: number) => (
+                <div key={index}>
+                    {renderItem(item, index)}
                 </div>
             ))}
         </div>
