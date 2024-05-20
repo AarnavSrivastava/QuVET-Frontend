@@ -16,13 +16,13 @@ const config: Config = {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        'light-blue': '#b8d8d8ff',
-        'china-rose': '#b15e6cff',
-        'china-rose-op50': '#b15e6c4f',
-        'gunmetal': '#2b3d41ff',
-        'paynes-grey': '#4c5f6bff',
-        'paynes-grey-op50': '#4c5f6b4f',
-        'cadet-grey': '#83a0a0ff',
+        'background': '#6DA5C0',
+        'accent': '#b15e6c',
+        'accent-op50': '#b15e6c4f',
+        'primary-dark': '#05161A',
+        'primary-dark-op50': '#05161A66',
+        'primary': '#0C7078',
+        'primary-light': '#0F988C',
       },
       keyframes: {
         bounce: {
@@ -32,6 +32,9 @@ const config: Config = {
       },
       animation: {
         bounce: "bounce 100ms ease-in-out"
+      },
+      fontFamily: {
+        playfair: ['var(--font-playfair)']
       }
     },
   },

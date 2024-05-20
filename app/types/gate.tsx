@@ -1,4 +1,4 @@
-enum QuantumGate {
+export enum QuantumGate {
     X = 'X',
     Y = 'Y',
     Z = 'Z',

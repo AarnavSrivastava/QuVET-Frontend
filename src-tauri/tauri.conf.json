@@ -47,7 +47,12 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": {
+        "default-src": "'self' customprotocol: asset:",
+        "connect-src": "ipc: https://ipc.localhost",
+        "img-src": "'self' asset: https://asset.localhost blob: data:",
+        "style-src": "'unsafe-inline' 'self' asset: https://asset.localhost"
+      }
     },
     "updater": {
       "active": false
@@ -58,7 +63,8 @@
         "height": 800,
         "resizable": true,
         "title": "qc-vis",
-        "width": 1200
+        "width": 1200,
+        "fileDropEnabled": true
       }
     ]
   }

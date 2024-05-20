@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -7,6 +7,11 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
+const playfair_display = Playfair_Display({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-playfair'
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${playfair_display.className}`}>{children}</body>
     </html>
   );
 }
