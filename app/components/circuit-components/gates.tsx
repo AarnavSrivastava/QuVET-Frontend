@@ -2,12 +2,18 @@
 import React, { useState } from 'react';
 import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
+import {v4 as uuidv4} from 'uuid';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Gates({handleDelete, index, gate}: any) {
+    const [idUUID, setIdUUID] = useState(uuidv4());
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
-        id: `Gate ${gate}-${index}`,
+        id: `Gate-${gate.type}-${index}-${idUUID}`,
         data: {
-            type: 'gates',
+            type: 'gate',
+            id: idUUID,
+            gate: gate
         }
     });
 
@@ -16,8 +22,8 @@ export default function Gates({handleDelete, index, gate}: any) {
     }
 
     return (
-        <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="flex justify-center items-center w-[100px] h-[100px] bg-primary-dark text-white text-[1.75rem] rounded-md font-playfair">
-            {gate.type} 
+        <div id={idUUID} ref={setNodeRef} style={style} {...listeners} {...attributes} className="hover:bg-primary-dark-highlight select-none transition-all flex justify-center items-center w-[100px] h-[100px] bg-primary-dark text-white text-[1.75rem] rounded-md font-playfair z-[10]">
+            {gate.type}
         </div>
     );
 }

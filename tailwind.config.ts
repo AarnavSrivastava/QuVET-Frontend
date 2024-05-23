@@ -18,10 +18,10 @@ const config: Config = {
         current: 'currentColor',
         'background': '#6DA5C0',
         'accent': '#b15e6c',
-        'accent-op50': '#b15e6c4f',
         'primary-dark': '#05161A',
-        'primary-dark-op50': '#05161A66',
+        'primary-dark-op50': '#05161A2E',
         'primary': '#0C7078',
+        'primary-dark-highlight': '#09282F',
         'primary-light': '#0F988C',
       },
       keyframes: {
