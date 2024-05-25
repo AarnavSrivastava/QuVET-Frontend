@@ -15,8 +15,8 @@ import { resourceDir } from '@tauri-apps/api/path';
 // const resourceDirPath = await resourceDir();
 
 async function getDirPath() {
-    const resourceDirPath = await resourceDir();
-    console.log(resourceDirPath);
+    // const resourceDirPath = await resourceDir();
+    // console.log(resourceDirPath);
 }
 
 export default function Wires({handleDelete, index, wire}: any) {
