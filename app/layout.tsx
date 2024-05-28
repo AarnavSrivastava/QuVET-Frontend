@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Dosis, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -11,6 +11,16 @@ const playfair_display = Playfair_Display({
   subsets: ["latin"],
   display: 'swap',
   variable: '--font-playfair'
+});
+const dosis = Dosis({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-dosis'
+});
+const nunito_sans = Nunito_Sans({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-nunito'
 });
 
 export const metadata: Metadata = {
@@ -25,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${playfair_display.className}`}>{children}</body>
+      <body className={`${inter.variable} ${playfair_display.variable} ${dosis.variable} ${nunito_sans.variable}`}>{children}</body>
     </html>
   );
 }

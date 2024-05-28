@@ -15,8 +15,8 @@ import { resourceDir } from '@tauri-apps/api/path';
 // const resourceDirPath = await resourceDir();
 
 async function getDirPath() {
-    const resourceDirPath = await resourceDir();
-    console.log(resourceDirPath);
+    // const resourceDirPath = await resourceDir();
+    // console.log(resourceDirPath);
 }
 
 export default function Wires({handleDelete, index, wire}: any) {
@@ -36,9 +36,8 @@ export default function Wires({handleDelete, index, wire}: any) {
             <div className="group-hover:scale-100 scale-0 absolute flex justify-center items-center w-10 h-10 m-4 z-20 transition-all ease-in-out">
                 <button
                     className="w-full h-full hover:bg-accent bg-primary rounded-full border-4 border-black transition-all duration-250"
-                    onClick={() => getDirPath()}
+                    onClick={() => handleDelete(wire.index)}
                 >
-                    {/* handleDelete(wire.index) */}
                     <FontAwesomeIcon
                         icon={faXmark}
                         style={{ color: "black", fontSize: 30 }}

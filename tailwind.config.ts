@@ -34,7 +34,9 @@ const config: Config = {
         bounce: "bounce 100ms ease-in-out"
       },
       fontFamily: {
-        playfair: ['var(--font-playfair)']
+        "dosis": ['var(--font-dosis)'],
+        "playfair": ['var(--font-playfair)'],
+        "nunito": ['var(--font-nunito)']
       }
     },
   },

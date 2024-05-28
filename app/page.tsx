@@ -8,14 +8,19 @@ import CircuitSidebar from "./components/circuit-components/circuit_sidebar"
 import React, { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 import { DndContext } from "@dnd-kit/core";
 
 import { invoke } from '@tauri-apps/api/tauri'
+import { message } from '@tauri-apps/api/dialog'
+import { getClient, Body, ResponseType } from '@tauri-apps/api/http';
 
 export default function Home() {
-  const [buttonEffect, setButtonEffect] = useState(false);
+  const [addButtonEffect, setAddButtonEffect] = useState(false);
+  const [playButtonEffect, setPlayButtonEffect] = useState(false);
+  const [running, setRunning] = useState(false);
+
   const [nextId, setNextId] = useState(1);
   const [wires, setWires] = useState([
     {
@@ -30,11 +35,14 @@ export default function Home() {
     }
   ]);
 
+  const [probabilities, setProbabilities] = useState([]);
+
   const print_term = (message) => {
     invoke<string>('println_term', { message: `\nFrom the frontend: \n\n${message}\n` }).then(() => {}).catch(console.error)
   }
 
   const handleDragEnd = (event) => {
+    setProbabilities([]);
     const {active, over} = event;
     
     if (over && over.data.current.accepts.includes(active.data.current.type)) {
@@ -75,34 +83,93 @@ export default function Home() {
       setWires(newWires);
     }
   }
+
+  const getProbabilities = async () => {
+    setRunning(true)
+
+    try {
+      const client = await getClient();
+
+      const response = await client.post('http://127.0.0.1:5000/circuit', {
+        type: "Json",
+        payload: JSON.stringify({
+          "data": wires
+        }),
+      });
+
+      setRunning(false)
+
+      return response.data;
+    } catch(error) {
+      console.error(error)
+    }
+
+    setRunning(false)
+
+    return "Empty";
+  }
+
 // onDragEnd={handleDragEnd}
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <CircuitSidebar />
-      <main className="flex flex-col min-h-screen min-w-max items-end gap-10 pl-10 py-10">
-        <button onClick={() => {        
-          setWires(
-            [
-              ...wires,
-              {
-                index: nextId,
-                gates: []
-              }
-            ]
-          );
+      <main className="flex flex-col h-screen w-screen items-center gap-10 pl-10 py-10">
+        <div className="fixed flex flex-row justify-between items-center w-screen">
+          <button onClick={async () => {
+              if (!running) {
+                setPlayButtonEffect(true)
 
-          setNextId(nextId + 1);
-          setButtonEffect(true);
-        }}
-        className={`${
-          buttonEffect && "animate-bounce"
-        } mr-5 hover:bg-primary-dark-op50 hover:scale-110 transition-all duration-250 w-10 h-10 rounded-full`}
-        onAnimationEnd={() => setButtonEffect(false)}>
-          <FontAwesomeIcon
-            icon={ faPlus }
-            style={{ color: "black", fontSize: 30 }}
-          />
-        </button>
+                let response = await getProbabilities()
+
+                console.log(response)
+
+                if (response !== "Empty") {
+                  setProbabilities(response.probabilities)
+                }
+              } else {
+                await message("Program is running!");
+              }
+            }}
+            className={`${
+              playButtonEffect && "animate-bounce"
+            } hover:bg-primary-dark-op50 hover:scale-110 transition-all duration-250 w-10 h-10 rounded-full flex items-center justify-center`}
+            onAnimationEnd={() => setPlayButtonEffect(false)}>
+              <FontAwesomeIcon
+                icon={ faPlay }
+                style={{ color: "black", fontSize: 20 }}
+              />
+            </button>
+
+            <button onClick={async () => {        
+              if (wires.length < 10) {
+                setWires(
+                  [
+                    ...wires,
+                    {
+                      index: nextId,
+                      gates: []
+                    }
+                  ]
+                );
+      
+                setNextId(nextId + 1);
+                setAddButtonEffect(true);
+      
+                console.log(JSON.stringify(wires));
+              } else {
+                await message("Wire limit reached!");
+              }
+            }}
+            className={`${
+              addButtonEffect && "animate-bounce"
+            } mr-10 hover:bg-primary-dark-op50 hover:scale-110 transition-all duration-250 w-10 h-10 rounded-full`}
+            onAnimationEnd={() => setAddButtonEffect(false)}>
+              <FontAwesomeIcon
+                icon={ faPlus }
+                style={{ color: "black", fontSize: 30 }}
+              />
+          </button>
+        </div>
         <ListBuilder
           items={wires}
           renderItem={
@@ -115,8 +182,23 @@ export default function Home() {
               }
             }
           />}
-          className="flex flex-col gap-[50px] w-full"
+          className="flex flex-col gap-[50px] w-full mt-20"
         />
+        {
+          probabilities.length > 0 && <div className="flex flex-col w-full items-center justify-center font-nunito">
+            <div className="text-lg">
+              Listed below are probabilities of the qubit(s) being in
+            </div>
+            <ListBuilder
+              items={probabilities}
+              renderItem={
+                (probability: number, index: number) => <li key={index}>
+                  State {index}: {probability}
+                </li>}
+              className="text-md flex flex-col gap-[20px] w-full my-10 items-center justify-center"
+            />
+          </div>
+        }
       </main>
     </DndContext>
   );
