@@ -15,8 +15,7 @@ const config: Config = {
       },
       colors: {
         transparent: 'transparent',
-        current: 'currentColor',
-        'background': '#6DA5C0',
+        'background': '#86acb5',
         'accent': '#b15e6c',
         'primary-dark': '#05161A',
         'primary-dark-op50': '#05161A2E',

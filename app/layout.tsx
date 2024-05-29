@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair_display.variable} ${dosis.variable} ${nunito_sans.variable}`}>{children}</body>
+      <body className={`${inter.variable} ${playfair_display.variable} ${dosis.variable} ${nunito_sans.variable} bg-background`}>{children}</body>
     </html>
   );
 }

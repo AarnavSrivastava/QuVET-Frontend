@@ -5,16 +5,19 @@ import Wires from "./components/circuit-components/wires";
 import { Wire } from "./types/wire";
 import { Gate, QuantumGate } from "./types/gate";
 import CircuitSidebar from "./components/circuit-components/circuit_sidebar"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 import { DndContext } from "@dnd-kit/core";
 
-import { invoke } from '@tauri-apps/api/tauri'
 import { message } from '@tauri-apps/api/dialog'
 import { getClient, Body, ResponseType } from '@tauri-apps/api/http';
+import { listen } from "@tauri-apps/api/event";
+import { Store } from "tauri-plugin-store-api";
+
+import {Tooltip} from "@nextui-org/tooltip";
 
 export default function Home() {
   const [addButtonEffect, setAddButtonEffect] = useState(false);
@@ -36,10 +39,6 @@ export default function Home() {
   ]);
 
   const [probabilities, setProbabilities] = useState([]);
-
-  const print_term = (message) => {
-    invoke<string>('println_term', { message: `\nFrom the frontend: \n\n${message}\n` }).then(() => {}).catch(console.error)
-  }
 
   const handleDragEnd = (event) => {
     setProbabilities([]);
@@ -109,37 +108,75 @@ export default function Home() {
     return "Empty";
   }
 
+  useEffect(() => {
+    //listen to a event
+    const unlisten = listen("save", async (e) => {
+      const store = new Store(".circuit.json");
+
+      await store.set("wires", wires);
+      await store.save();
+    });
+
+    return () => {
+      unlisten.then(f => f());
+    }
+  }, [wires]);
+
+  useEffect(() => {
+    const fetchWires = async () => {
+      try {
+        const store = new Store(".circuit.json");
+        const storedWires = await store.get("wires");
+        if (storedWires) {
+          setWires(storedWires);
+          // Update nextId based on the fetched wires
+          const maxId = storedWires.reduce((max, wire) => Math.max(max, wire.index), 0);
+          setNextId(maxId + 1);
+        }
+      } catch (error) {
+        console.error("Failed to fetch wires from store:", error);
+      }
+    };
+
+    fetchWires();
+  }, []);
+
 // onDragEnd={handleDragEnd}
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <CircuitSidebar />
       <main className="flex flex-col h-screen w-screen items-center gap-10 pl-10 py-10">
         <div className="fixed flex flex-row justify-between items-center w-screen">
-          <button onClick={async () => {
-              if (!running) {
-                setPlayButtonEffect(true)
+          <Tooltip color="warning" content={
+              <div className="flex p-4 rounded-lg border-[3px] border-black justify-center font-nunito items-center bg-primary-dark-highlight">
+                  Press this button to run the simulation!
+              </div>
+          } placement="right" delay={1000}>
+            <button onClick={async () => {
+                if (!running) {
+                  setPlayButtonEffect(true)
 
-                let response = await getProbabilities()
+                  let response = await getProbabilities()
 
-                console.log(response)
+                  console.log(response)
 
-                if (response !== "Empty") {
-                  setProbabilities(response.probabilities)
+                  if (response !== "Empty") {
+                    setProbabilities(response.probabilities)
+                  }
+                } else {
+                  await message("Program is running!");
                 }
-              } else {
-                await message("Program is running!");
-              }
-            }}
-            className={`${
-              playButtonEffect && "animate-bounce"
-            } hover:bg-primary-dark-op50 hover:scale-110 transition-all duration-250 w-10 h-10 rounded-full flex items-center justify-center`}
-            onAnimationEnd={() => setPlayButtonEffect(false)}>
-              <FontAwesomeIcon
-                icon={ faPlay }
-                style={{ color: "black", fontSize: 20 }}
-              />
-            </button>
-
+              }}
+              className={`${
+                playButtonEffect && "animate-bounce"
+              } hover:bg-primary-dark-op50 hover:scale-110 transition-all duration-250 w-10 h-10 rounded-full flex items-center justify-center`}
+              onAnimationEnd={() => setPlayButtonEffect(false)}>
+                <FontAwesomeIcon
+                  icon={ faPlay }
+                  style={{ color: "black", fontSize: 20 }}
+                />
+              </button>
+            </Tooltip>
             <button onClick={async () => {        
               if (wires.length < 10) {
                 setWires(

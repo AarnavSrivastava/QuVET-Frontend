@@ -6,7 +6,7 @@
     "distDir": "../out"
   },
   "package": {
-    "productName": "qc-vis",
+    "productName": "QuVET",
     "version": "0.1.0"
   },
   "tauri": {
@@ -77,7 +77,7 @@
         "fullscreen": true,
         "height": 800,
         "resizable": true,
-        "title": "qc-vis",
+        "title": "QuVET",
         "width": 1200,
         "fileDropEnabled": true
       }
