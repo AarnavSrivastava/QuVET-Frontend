@@ -10,11 +10,17 @@ use tauri::{CustomMenuItem, Manager, Menu, MenuItem, Submenu};
 fn main() {
   let quit = CustomMenuItem::new("quit".to_string(), "Quit");
   let save = CustomMenuItem::new("save".to_string(), "Save");
-  let submenu = Submenu::new("File", Menu::new().add_item(quit).add_item(save));
+  let submenu_file = Submenu::new("File", Menu::new().add_item(quit).add_item(save));
+
+  let run = CustomMenuItem::new("run".to_string(), "Run");
+  let clear = CustomMenuItem::new("clear".to_string(), "Clear");
+  let submenu_circuit = Submenu::new("Circuit", Menu::new().add_item(run).add_item(clear));
+
   let menu = Menu::new()
     .add_native_item(MenuItem::Copy)
     .add_item(CustomMenuItem::new("hide", "Hide"))
-    .add_submenu(submenu);
+    .add_submenu(submenu_file)
+    .add_submenu(submenu_circuit);
 
   tauri::Builder::default()
     // .invoke_handler(tauri::generate_handler![println_term])
@@ -27,6 +33,12 @@ fn main() {
         }
         "save" => {
           event.window().emit_all("save", ()).unwrap();
+        }
+        "run" => {
+          event.window().emit_all("run", ()).unwrap();
+        }
+        "clear" => {
+          event.window().emit_all("clear", ()).unwrap();
         }
         _ => {}
       }

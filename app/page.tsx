@@ -110,17 +110,42 @@ export default function Home() {
 
   useEffect(() => {
     //listen to a event
-    const unlisten = listen("save", async (e) => {
+    const unlisten_save = listen("save", async (e) => {
       const store = new Store(".circuit.json");
 
       await store.set("wires", wires);
       await store.save();
     });
 
+    const unlisten_run = listen("run", async (e) => {
+      if (!running) {
+        let response = await getProbabilities()
+
+        console.log(response)
+
+        if (response !== "Empty") {
+          setProbabilities(response.probabilities)
+        }
+      } else {
+        await message("Program is running!");
+      }
+    });
+
+    const unlisten_clear = listen("clear", async (e) => {
+      setWires([{
+        index: 0,
+        gates: []
+      }]);
+
+      setProbabilities([]);
+    });
+
     return () => {
-      unlisten.then(f => f());
+      unlisten_save.then(f => f());
+      unlisten_run.then(g => g());
+      unlisten_clear.then(h => h());
     }
-  }, [wires]);
+  }, [wires, probabilities, running]);
 
   useEffect(() => {
     const fetchWires = async () => {
@@ -191,6 +216,8 @@ export default function Home() {
       
                 setNextId(nextId + 1);
                 setAddButtonEffect(true);
+
+                setProbabilities([]);
       
                 console.log(JSON.stringify(wires));
               } else {
@@ -216,6 +243,8 @@ export default function Home() {
                   let newWires = wires.filter((wire: Wire) => wire.index !== indexToDelete);
                   setWires(newWires);
                 }
+
+                setProbabilities([]);
               }
             }
           />}
