@@ -251,8 +251,8 @@ export default function Home() {
           className="flex flex-col gap-[50px] w-full mt-20"
         />
         {
-          probabilities.length > 0 && <div className="flex flex-col w-full items-center justify-center font-nunito">
-            <div className="text-lg">
+          probabilities.length > 0 && <div className="flex flex-col w-full items-center justify-center font-nunito text-[20px]">
+            <div className="text-[24px]">
               Listed below are probabilities of the qubit(s) being in
             </div>
             <ListBuilder
