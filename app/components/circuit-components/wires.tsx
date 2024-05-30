@@ -8,9 +8,8 @@ import { Gate } from '../../types/gate';
 import ListBuilder from '../general-components/listbuilder';
 import Gates from './gates';
 import {useDroppable} from '@dnd-kit/core';
-import { DndContext } from "@dnd-kit/core";
 
-import { resourceDir } from '@tauri-apps/api/path';
+// import { resourceDir } from '@tauri-apps/api/path';
 
 // const resourceDirPath = await resourceDir();
 

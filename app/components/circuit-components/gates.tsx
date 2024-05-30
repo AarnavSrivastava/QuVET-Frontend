@@ -22,7 +22,7 @@ export default function Gates({handleDelete, index, gate}: any) {
     }
 
     return (
-        <div id={idUUID} ref={setNodeRef} style={style} {...listeners} {...attributes} className="hover:bg-primary-dark-highlight select-none transition-all flex justify-center items-center w-[100px] h-[100px] bg-primary-dark text-white text-[1.75rem] rounded-md font-playfair z-[10]">
+        <div id={idUUID} ref={setNodeRef} style={style} {...listeners} {...attributes} className="select-none flex justify-center items-center w-[100px] h-[100px] bg-primary-dark text-white text-[1.75rem] rounded-md font-playfair z-[10]">
             {gate.type}
         </div>
     );

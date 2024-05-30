@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import ListBuilder from "../general-components/listbuilder"
 import { Gate, QuantumGate } from "../../types/gate";
 import Gates from "./gates"
-import { DndContext } from "@dnd-kit/core";
 
 import {Tooltip} from "@nextui-org/tooltip";
 
@@ -50,8 +49,8 @@ export default function CircuitSidebar() {
     ];
 
     return (
-        <div className={`fixed flex flex-row items-center w-[300px] h-screen bg-transparent z-[100] overflow-y-visible overflow-x-visible ${(!active) ? "translate-x-[-270px]" : "translate-x-0"} transition-all ease-in-out duration-500`}>
-            <div className="flex items-start justify-center w-[270px] h-screen bg-primary py-10">
+        <div className={`fixed flex flex-row items-center w-[300px] min-h-screen bg-transparent z-[100] overflow-y-visible overflow-x-visible ${(!active) ? "translate-x-[-270px]" : "translate-x-0"} transition-all ease-in-out duration-500`}>
+            <div className="flex items-start justify-center w-[270px] min-h-screen bg-primary py-10">
                 <ListBuilder
                     items={gates}
                     renderItem={(item, gateIndex: number) => (
