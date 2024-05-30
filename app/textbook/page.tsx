@@ -8,7 +8,7 @@ export default function Home() {
           <Link className="p-10 w-full h-10 flex justify-center items-center bg-primary text-white rounded hover:bg-green-700" href="/textbook/chapters/chapter_1">
             Chapter 1
           </Link>
-          <Link className="p-10 w-full h-10 flex justify-center items-center bg-primary text-white rounded hover:bg-green-700" href="/circuit">
+          <Link className="p-10 w-full h-10 flex justify-center items-center bg-primary text-white rounded hover:bg-green-700" href="/textbook/chapters/chapter_2">
             Chapter 2
           </Link>
           <Link className="p-10 w-full h-10 flex justify-center items-center bg-primary text-white rounded hover:bg-green-700" href="/">
