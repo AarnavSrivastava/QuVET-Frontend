@@ -36,9 +36,21 @@ const config: Config = {
         "dosis": ['var(--font-dosis)'],
         "playfair": ['var(--font-playfair)'],
         "nunito": ['var(--font-nunito)']
-      }
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            h1: {
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-dosis)',
+              fontSize: '48px',
+              fontWeight: 'bold'
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
 export default config;
