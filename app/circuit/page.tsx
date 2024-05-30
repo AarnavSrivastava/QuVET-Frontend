@@ -299,7 +299,7 @@ export default function Home() {
               items={probabilities}
               renderItem={
                 (probability: number, index: number) => <li key={index} className="flex flex-row items-center justify-center font-nunito text-[20px]">
-                  <div className="italic font-extrabold">P({index.toString(2).padEnd(wires.length.toString(2).length, '0')})</div>: {probability.toFixed(4)}, or {probability.toFixed(4) * 100}%
+                  <div className="italic font-extrabold">P({index.toString(2).padEnd(wires.length.toString(2).length * 2, '0')})</div>: {probability.toFixed(4)}, or {probability.toFixed(4) * 100}%
                 </li>}
               className="text-md flex flex-col gap-[20px] w-full my-10 items-center justify-center"
             />

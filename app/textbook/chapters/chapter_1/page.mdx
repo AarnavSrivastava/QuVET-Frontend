@@ -1,25 +1,24 @@
-# GFM
+# 1.1 - All about qubits
 
-## Autolink literals
+---
+Learning outcomes:
+- Write down a mathematical description of a qubit state in two different notations.
+- Define and give examples of what it means for a quantum system to be in a superposition of states.
+- State the relationship between amplitudes and measurement outcome probabilities, and what it means for a state to be normalized.
+- Explain how operations are mathematically applied to qubit states.
+---
+Quantum computers are an emerging technology with amazing potential to solve problems that are intractable even on today's biggest supercomputers. Regular computers, which we will refer to as classical computers, represent information as bits. A bit is a binary value. It can be either 0 or 1, and this is associated to something physical being in two different states. For example, a voltage passing through an electronic component can be used to represent bits. We can choose a threshold value of the voltage, and denote any voltage over that threshold as a bit in state 1, and similarly any voltage below as a bit in state 0.
 
-www.example.com, https://example.com, and contact@example.com.
+The power of quantum computers comes from the different way in which they represent and manipulate information. Quantum computers use special bits, called quantum bits, or qubits. As with bits, qubits also correspond to something physical, but our focus here will be on the theory from a software and algorithms perspective.
 
-## Footnote
+Quantum computing is the manipulation of qubits to solve problems. Before we can delve into quantum computation, we need a framework for describing qubits and the things we can do to them. In this node, you will learn about the mathematical underpinnings of quantum computing. The key ingredients we need are:
+- a mathematical representation of a qubit's state
+- a means of measuring a qubit to determine what state it is in
+- a way of manipulating the state to perform computation
 
-A note[^1]
+### Mathematical representation of qubits
+Under the hood, the mathematical framework of quantum computing is linear algebra. A qubit is represented by a state, which is a column vector of two elements. The two most basic ones are the analogues of a bit's "0" and "1" state, which are represented by the following two vectors:
 
-[^1]: Big note.
+qubit state 0 = (1 0), qubit state 1 = (0, 1)
 
-## Strikethrough
-
-~one~ or ~~two~~ tildes.
-
-## Table
-
-| a | b  |  c |  d  |
-| - | :- | -: | :-: |
-
-## Tasklist
-
-* [ ] to do
-* [x] done
+<a href='/textbook'>Back to textbook</a>
