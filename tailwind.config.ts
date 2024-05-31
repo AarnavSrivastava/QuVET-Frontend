@@ -46,6 +46,32 @@ const config: Config = {
               fontSize: '48px',
               fontWeight: 'bold'
             },
+            h2: {
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-playfair)',
+              fontSize: '36px',
+              fontWeight: 'bold'
+            },
+            h3: {
+              color: '#000000',
+              fontFamily: 'var(--font-playfair)',
+              fontSize: '24px',
+              fontWeight: 'bold'
+            },
+            p: {
+              color: '#000000',
+              fontFamily: 'var(--font-nunito)',
+              fontSize: '16px',
+            },
+            ul: {
+              color: '#000000',
+              fontFamily: 'var(--font-nunito)',
+              fontSize: '16px',
+            },
+            a: {
+              fontFamily: 'var(--font-nunito)',
+              fontSize: '16px',
+            }
           },
         },
       },

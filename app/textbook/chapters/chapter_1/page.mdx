@@ -9,6 +9,8 @@ Learning outcomes:
 ---
 Quantum computers are an emerging technology with amazing potential to solve problems that are intractable even on today's biggest supercomputers. Regular computers, which we will refer to as classical computers, represent information as bits. A bit is a binary value. It can be either 0 or 1, and this is associated to something physical being in two different states. For example, a voltage passing through an electronic component can be used to represent bits. We can choose a threshold value of the voltage, and denote any voltage over that threshold as a bit in state 1, and similarly any voltage below as a bit in state 0.
 
+![graph](https://codebook.xanadu.ai/images/voltage_threshold.svg "graph")
+
 The power of quantum computers comes from the different way in which they represent and manipulate information. Quantum computers use special bits, called quantum bits, or qubits. As with bits, qubits also correspond to something physical, but our focus here will be on the theory from a software and algorithms perspective.
 
 Quantum computing is the manipulation of qubits to solve problems. Before we can delve into quantum computation, we need a framework for describing qubits and the things we can do to them. In this node, you will learn about the mathematical underpinnings of quantum computing. The key ingredients we need are:
@@ -19,6 +21,62 @@ Quantum computing is the manipulation of qubits to solve problems. Before we can
 ### Mathematical representation of qubits
 Under the hood, the mathematical framework of quantum computing is linear algebra. A qubit is represented by a state, which is a column vector of two elements. The two most basic ones are the analogues of a bit's "0" and "1" state, which are represented by the following two vectors:
 
-qubit state 0 = (1 0), qubit state 1 = (0, 1)
+$$
+\begin{matrix}
+\text{qubit state 0} = \begin{pmatrix}
+1 \\ 0
+\end{pmatrix}
+\\
+\text{qubit state 1} = \begin{pmatrix}
+0 \\ 1
+\end{pmatrix}
+\end{matrix}
+$$
 
-<a href='/textbook'>Back to textbook</a>
+This is tedious to write, though, so in quantum computing (and more generally, in quantum mechanics) we use a type of shorthand notation called Dirac notation, or bra-ket notation. The state vector of a qubit is called a ket, the notation for which is . What goes in between the  and  is a label to denote particular state. The two states above, in bra-ket notation, are expressed like so:
+
+$$
+\begin{matrix}
+|0\rangle = \begin{pmatrix}
+1 \\ 0
+\end{pmatrix}
+\\
+|1\rangle = \begin{pmatrix}
+0 \\ 1
+\end{pmatrix}
+\end{matrix}
+$$
+
+Quite often, we will see the notation $|\psi\rangle$, which represents a qubit in some arbitrary state labelled by $\psi$.
+
+Bra-ket notation gets its name for a reason: for every ket, there is an associated bra. A bra is like a ket turned on its side. It is a row vector, where each element in the vector is the complex conjugate of the corresponding element in the ket. (More formally, a bra is the conjugate transpose of a ket.) The notation for bras is the reverse of the notation for kets:
+
+$$
+\begin{matrix}
+\langle 0| = \begin{pmatrix}
+1 && 0
+\end{pmatrix}
+\\
+\langle 1| = \begin{pmatrix}
+0 && 1
+\end{pmatrix}
+\end{matrix}
+$$
+
+These two states, $|0\rangle$ and $|1\rangle$, are particularly important because they form a basis. In linear algebra, a basis is a set of vectors that spans a vector space; you can write anything else in that space as a linear combination of those basis vectors. Bases must consist of linearly independent vectors. A special case of this is when the basis vectors are orthogonal. Orthogonality can be checked by taking the inner product between two vectors, which is defined by the dot product. The same holds true for qubit states (with a bit of a twist).
+
+The inner product between two qubit states is computed by taking the dot product between the bra of one, and the ket of the other (they combine to form a "bra-ket" expression). We can do so to check that $|0\rangle$ and $|1\rangle$ are orthogonal:
+
+$$
+\langle 0||1\rangle = \langle 0|1\rangle = \begin{pmatrix}
+1 && 0
+\end{pmatrix} \cdot \begin{pmatrix}
+0 \\ 1
+\end{pmatrix}
+=
+1 \cdot 0 + 0 \cdot 1 = 0
+$$
+
+Notice how we simplify the notation when combining a bra and a ket by eliminating one of the vertical lines. Thus, $|0\rangle$ and $|1\rangle$ are orthogonal, and form a basis. This is a special basis called the computational basis, and it is the most commonly-used basis in which to express quantum states.
+
+<a href='/textbook'>Back to chapter page</a>
