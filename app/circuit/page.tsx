@@ -29,18 +29,7 @@ export default function Home() {
   const [running, setRunning] = useState(false);
 
   const [nextId, setNextId] = useState(1);
-  const [wires, setWires] = useState([
-    {
-      index: 0,
-      gates: [
-        {
-          index: 0,
-          type: QuantumGate.X,
-          wires: [0]
-        }
-      ]
-    }
-  ]);
+  const [wires, setWires] = useState([]);
 
   const [probabilities, setProbabilities] = useState([]);
 
